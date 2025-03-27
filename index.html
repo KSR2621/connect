@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student-Startup Connect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #4f46e5;
+            --accent-color: #818cf8;
+            --background-color: #f8fafc;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+            --header-bg: #4f46e5;
+            --mobile-breakpoint: 768px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--header-bg), var(--primary-color));
+            padding: 80px 20px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-repeat: no-repeat;
+            background-position: bottom;
+            background-size: cover;
+            opacity: 0.1;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+            animation: fadeInDown 1s ease-out;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.4rem;
+            margin: 0 auto;
+            max-width: 700px;
+            color: rgba(255,255,255,0.9);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        nav {
+            background: var(--card-bg);
+            padding: 20px 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -8px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .auth-buttons button {
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .signup-btn, .profile-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .login-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .signup-btn:hover, .profile-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: color 0.3s ease;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .hamburger:hover {
+            color: var(--secondary-color);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-content h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .card-content p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            opacity: 0.85;
+            flex: 1;
+        }
+
+        .card-content a {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            margin-top: auto;
+        }
+
+        .card-content a:hover {
+            color: var(--secondary-color);
+            transform: translateX(5px);
+        }
+
+        .about-section {
+            padding: 80px 20px;
+            background: var(--card-bg);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .about-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: transform 0.4s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.03);
+        }
+
+        .contact-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--header-bg), var(--primary-color));
+            color: white;
+        }
+
+        .contact-section .section-title {
+            color: white;
+        }
+
+        .contact-section .section-title::after {
+            background: white;
+        }
+
+        .contact-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            align-items: center;
+        }
+
+        .contact-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .contact-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .contact-image img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: transform 0.4s ease;
+        }
+
+        .contact-image:hover img {
+            transform: scale(1.03);
+        }
+
+        .whatsapp-contact {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 25px 0;
+            font-size: 1.2rem;
+        }
+
+        .whatsapp-contact i {
+            font-size: 2.2rem;
+            color: #25D366;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.4s ease;
+            font-size: 1rem;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        footer {
+            background: var(--text-color);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        footer p {
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            header {
+                padding: 60px 20px;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+                line-height: 1.2;
+            }
+            
+            header p {
+                font-size: 1.1rem;
+            }
+            
+            nav {
+                padding: 15px 20px;
+                justify-content: space-between;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--card-bg);
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 80px 30px 30px;
+                gap: 20px;
+                transition: right 0.3s ease;
+                z-index: 1000;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.2rem;
+                padding: 10px 0;
+            }
+            
+            .auth-buttons {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 20px;
+                gap: 15px;
+            }
+            
+            .nav-links.active .auth-buttons {
+                display: flex;
+            }
+            
+            .auth-buttons button {
+                width: 100%;
+                padding: 12px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 40px;
+            }
+            
+            .container {
+                padding: 40px 15px;
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .card {
+                max-width: 100%;
+            }
+            
+            .about-section, .contact-section {
+                padding: 60px 20px;
+            }
+            
+            .about-content, .contact-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .about-text, .contact-text {
+                font-size: 1rem;
+            }
+            
+            .whatsapp-contact {
+                font-size: 1.1rem;
+            }
+            
+            .whatsapp-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            /* Ensure the desktop-auth div is hidden on mobile */
+            .desktop-auth {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .card-content h3 {
+                font-size: 1.3rem;
+            }
+            
+            .card-content p {
+                font-size: 0.95rem;
+            }
+            
+            .whatsapp-contact {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+        /* Ensure auth-buttons in nav-links is hidden on desktop */
+        @media (min-width: 769px) {
+            .nav-links .auth-buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Student-Startup Connect</h1>
+        <p>Empowering Students with Real-World Startup Experience</p>
+    </header>
+
+    <nav>
+        <button class="hamburger"><i class="fas fa-bars"></i></button>
+        <div class="nav-links" id="navLinks">
+            <a href="available-projects.html">Available Projects</a>
+            <a href="available-students.html">Available Students</a>
+            <a href="community.html">Community Forum</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <div id="dynamicNav"></div>
+            <div class="auth-buttons" id="authButtons">
+                <button class="login-btn">Login</button>
+                <button class="signup-btn">Sign Up</button>
+            </div>
+        </div>
+        <div class="auth-buttons desktop-auth" id="desktopAuth">
+            <button class="login-btn">Login</button>
+            <button class="signup-btn">Sign Up</button>
+        </div>
+        <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <img src="https://www.gethow.org/wp-content/uploads/2019/09/project.jpg" alt="Available Projects">
+            <div class="card-content">
+                <h3>Available Projects</h3>
+                <p>Explore our range of innovative and impactful projects available for collaboration with startups looking for talented students.</p>
+                <a href="available-projects.html">View Projects <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://3.bp.blogspot.com/-7gU8ppxhxgU/V9Rt2_3TxvI/AAAAAAAAhss/upIGvFPk8QYnIrYowMhARrSt5UHKDQWLQCLcB/s640/student_profile_icon.gif" alt="Available Students">
+            <div class="card-content">
+                <h3>Available Students</h3>
+                <p>Discover talented students and freelancers with diverse skills eager to contribute to your startup projects.</p>
+                <a href="available-students.html">View Students <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://www.redriverrc.com/wp-content/uploads/2016/10/community-forum-2.jpg" alt="Community Forum">
+            <div class="card-content">
+                <h3>Community Forum</h3>
+                <p>Join the conversation, share your insights, ask questions, and connect with our vibrant student-startup community.</p>
+                <a href="community.html">Join Forum <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <section id="about" class="about-section">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Student-Startup Connect is a unique platform that connects talented students and professionals with companies looking for freelance support on exciting projects. We provide a space where businesses can list their projects and find the perfect match to bring their ideas to life.</p>
+                <p>What makes us different? We take full responsibility for ensuring that every project listed on our platform is completed on time and with 100% efficiency. We carefully manage the process to guarantee quality and reliability for both the companies and the freelancers.</p>
+                <p>Our platform stands out because of our thorough selection process. Students and professionals must go through an interview to join our community. Only those who pass this evaluation can apply for projects and work with companies, ensuring that businesses get access to skilled and dedicated individuals ready to deliver exceptional results.</p>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c" alt="Team Collaboration">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-content">
+            <div class="contact-text">
+                <p>Have questions or want to learn more about Student-Startup Connect? We'd love to hear from you!</p>
+                <p>Our team is available to help students find great opportunities and assist startups in connecting with talented individuals.</p>
+                <div class="whatsapp-contact">
+                   
+                </div>
+                <p>Get in touch with us directly on WhatsApp for the quickest response.</p>
+                <a href="https://wa.me/918789548725" class="whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+            <div class="contact-image">
+                <img src="https://images.unsplash.com/photo-1556155092-490a1ba16284" alt="Contact Us">
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Student-Startup Connect. All Rights Reserved.</p>
+        <div class="social-links">
+            <a href="mailto:kunalrajput2125@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD0wtET8bTtw_133RE4rWZiRFGESfbDtC0",
+            authDomain: "student-startup-connect.firebaseapp.com",
+            databaseURL: "https://student-startup-connect-default-rtdb.firebaseio.com",
+            projectId: "student-startup-connect",
+            storageBucket: "student-startup-connect.firebasestorage.app",
+            messagingSenderId: "570854385529",
+            appId: "1:570854385529:web:e45e5076a0cbcb9a56f1a8",
+            measurementId: "G-T5PMGL8K26"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('#navLinks');
+            const mobileOverlay = document.querySelector('#mobileOverlay');
+            const navLinksItems = document.querySelectorAll('.nav-links a');
+
+            const toggleMenu = () => {
+                navLinks.classList.toggle('active');
+                mobileOverlay.classList.toggle('active');
+                document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+            };
+
+            hamburger.addEventListener('click', toggleMenu);
+            mobileOverlay.addEventListener('click', toggleMenu);
+
+            // Close menu when any nav link is clicked
+            navLinksItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) { // Only for mobile
+                        navLinks.classList.remove('active');
+                        mobileOverlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+
+            // Update auth state for both mobile and desktop
+            onAuthStateChanged(auth, (user) => {
+                const authButtons = document.getElementById('authButtons');
+                const desktopAuth = document.getElementById('desktopAuth');
+                const dynamicNav = document.getElementById('dynamicNav');
+
+                if (user) {
+                    const userType = localStorage.getItem('userType');
+                    // Show profile button in desktop navbar
+                    desktopAuth.innerHTML = `
+                        <button class="profile-btn">Profile</button>
+                    `;
+                    // Show profile button in mobile menu
+                    authButtons.innerHTML = `
+                        <button class="profile-btn">Profile</button>
+                    `;
+                    
+                    if (userType === 'startup') {
+                        dynamicNav.innerHTML = `
+                            <a href="project-form.html">List a Project</a>
+                        `;
+                    } else if (userType === 'student') {
+                        dynamicNav.innerHTML = '';
+                    }
+                    
+                    // Add click handlers for all profile buttons
+                    document.querySelectorAll('.profile-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            window.location.href = 'profile.html';
+                            if (window.innerWidth <= 768) {
+                                navLinks.classList.remove('active');
+                                mobileOverlay.classList.remove('active');
+                                document.body.style.overflow = '';
+                            }
+                        });
+                    });
+                } else {
+                    // Show login/signup buttons in both locations
+                    const authButtonsHTML = `
+                        <button class="login-btn">Login</button>
+                        <button class="signup-btn">Sign Up</button>
+                    `;
+                    authButtons.innerHTML = authButtonsHTML;
+                    desktopAuth.innerHTML = authButtonsHTML;
+                    dynamicNav.innerHTML = '';
+                    
+                    // Add click handlers for all login/signup buttons
+                    document.querySelectorAll('.login-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            window.location.href = 'login.html';
+                        });
+                    });
+                    
+                    document.querySelectorAll('.signup-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            window.location.href = 'signup.html';
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

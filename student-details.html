@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #4f46e5;
+            --accent-color: #818cf8;
+            --background-color: #f8fafc;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+            --header-bg: #4f46e5;
+            --mobile-breakpoint: 768px;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--header-bg), var(--primary-color));
+            padding: 80px 20px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-repeat: no-repeat;
+            background-position: bottom;
+            background-size: cover;
+            opacity: 0.1;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+            animation: fadeInDown 1s ease-out;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        nav {
+            background: var(--card-bg);
+            padding: 20px 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+            position: absolute;
+            left: 20px;
+            width: 30px;
+            height: 24px;
+        }
+
+        .hamburger i {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+            transform-origin: left center;
+        }
+
+        .hamburger i:nth-child(1) {
+            top: 0;
+        }
+
+        .hamburger i:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .hamburger i:nth-child(3) {
+            bottom: 0;
+        }
+
+        .hamburger:hover i {
+            background-color: var(--secondary-color);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 3px;
+        }
+
+        .student-details {
+            line-height: 1.8;
+        }
+
+        .student-details p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        .student-details p strong {
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .student-details a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .student-details a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .no-data {
+            color: var(--text-color);
+            opacity: 0.7;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .back-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        footer {
+            background: var(--text-color);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        footer p {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            header {
+                padding: 60px 20px;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+                line-height: 1.2;
+            }
+            
+            nav {
+                padding: 15px 20px;
+                justify-content: flex-end;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--card-bg);
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 80px 30px 30px;
+                gap: 20px;
+                transition: right 0.3s ease;
+                z-index: 1000;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.2rem;
+                padding: 10px 0;
+            }
+            
+            .container {
+                max-width: 90%;
+                margin: 30px auto;
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+            
+            .student-details p {
+                font-size: 1rem;
+                margin: 12px 0;
+            }
+            
+            .no-data {
+                font-size: 1rem;
+            }
+            
+            .back-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            footer {
+                padding: 25px 15px;
+                font-size: 0.9rem;
+            }
+
+            .scroll-to-top {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+                margin-bottom: 12px;
+            }
+            
+            .student-details p {
+                font-size: 0.9rem;
+                margin: 10px 0;
+            }
+            
+            .no-data {
+                font-size: 0.9rem;
+            }
+            
+            .back-button {
+                padding: 8px 15px;
+                font-size: 0.85rem;
+            }
+            
+            footer {
+                padding: 20px 10px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Student Details</h1>
+    </header>
+
+    <nav>
+        <button class="hamburger">
+            <i></i>
+            <i></i>
+            <i></i>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="available-projects.html">Projects</a>
+            <a href="available-students.html">Students</a>
+            <a href="community.html">Community</a>
+        </div>
+        <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+    </nav>
+
+    <div class="container">
+        <h2>Student Profile</h2>
+        <div class="student-details" id="studentDetails">
+            <p>Loading student details...</p>
+        </div>
+        <a href="available-students.html" class="back-button">Back to Students</a>
+    </div>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <footer>
+        <p>© 2024 Student-Startup Connect. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('#navLinks');
+        const mobileOverlay = document.querySelector('#mobileOverlay');
+
+        const toggleMenu = () => {
+            navLinks.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        };
+
+        hamburger.addEventListener('click', toggleMenu);
+        mobileOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when any nav link is clicked
+        document.querySelectorAll('.nav-links a').forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                    mobileOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // Scroll to top button functionality
+        window.addEventListener('scroll', () => {
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        document.getElementById('scrollToTop').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+    <!-- Firebase SDK (Modular) -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+        import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD0wtET8bTtw_133RE4rWZiRFGESfbDtC0",
+            authDomain: "student-startup-connect.firebaseapp.com",
+            databaseURL: "https://student-startup-connect-default-rtdb.firebaseio.com",
+            projectId: "student-startup-connect",
+            storageBucket: "student-startup-connect.firebasestorage.app",
+            messagingSenderId: "570854385529",
+            appId: "1:570854385529:web:e45e5076a0cbcb9a56f1a8",
+            measurementId: "G-T5PMGL8K26"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+
+        // Get the userId from the URL query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('userId');
+
+        if (!userId) {
+            document.getElementById('studentDetails').innerHTML = '<p class="no-data">No student ID provided.</p>';
+            throw new Error('No userId provided in the URL.');
+        }
+
+        // Fetch student details
+        const studentRef = ref(database, `students/${userId}`);
+        get(studentRef).then((snapshot) => {
+            const studentDetails = document.getElementById('studentDetails');
+            if (!snapshot.exists()) {
+                studentDetails.innerHTML = '<p class="no-data">Student not found.</p>';
+                return;
+            }
+
+            const student = snapshot.val();
+            studentDetails.innerHTML = `
+                <p><strong>Name:</strong> ${student.fullName || 'N/A'}</p>
+                <p><strong>Email:</strong> ${student.email || 'N/A'}</p>
+                <p><strong>Skills:</strong> ${student.skills || 'N/A'}</p>
+                <p><strong>Experience:</strong> ${student.experience || 'N/A'}</p>
+                <p><strong>Education:</strong> ${student.education || 'N/A'}</p>
+                <p><strong>Resume:</strong> ${
+                    student.resumeLink ? `<a href="${student.resumeLink}" target="_blank">View</a>` : 'N/A'
+                }</p>
+                <p><strong>GitHub:</strong> ${
+                    student.githubLink ? `<a href="${student.githubLink}" target="_blank">Profile</a>` : 'N/A'
+                }</p>
+                <p><strong>LinkedIn:</strong> ${
+                    student.linkedinLink ? `<a href="${student.linkedinLink}" target="_blank">Profile</a>` : 'N/A'
+                }</p>
+                <p><strong>Bio:</strong> ${student.bio || 'N/A'}</p>
+                <p><strong>Project Types:</strong> ${student.preferredProjects || 'N/A'}</p>
+                <p><strong>Confirmed:</strong> ${student.confirmed ? 'Yes' : 'No'}</p>
+                <p><strong>Joined:</strong> ${
+                    student.timestamp ? new Date(student.timestamp).toLocaleString() : 'N/A'
+                }</p>
+            `;
+        }).catch((error) => {
+            console.error('Error fetching student details:', error);
+            document.getElementById('studentDetails').innerHTML = '<p class="no-data">Error loading student details: ' + error.message + '</p>';
+        });
+    </script>
+</body>
+</html>

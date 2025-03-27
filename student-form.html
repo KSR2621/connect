@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile Submission</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #4f46e5;
+            --accent-color: #818cf8;
+            --background-color: #f8fafc;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+            --header-bg: #4f46e5;
+            --mobile-breakpoint: 768px;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --light-gray: #e5e7eb;
+            --gray: #6b7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--background-color), #e6efff);
+        }
+
+        .container {
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin: 2rem auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+        }
+
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+
+        .form-group {
+            margin-bottom: 1.75rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-label i {
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 18px;
+            font-size: 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 12px;
+            background-color: #fff;
+            color: var(--text-color);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            outline: none;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%236b7280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 30px;
+                max-width: 500px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .form-control {
+                padding: 10px 15px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 20px;
+                max-width: 100%;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+            }
+
+            .form-control {
+                padding: 8px 12px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <div class="header">
+                <h1>Submit Your Profile</h1>
+                <p>Tell us about yourself to get started</p>
+            </div>
+
+            <form id="studentForm" style="margin-top: 2rem;">
+                <div class="form-group">
+                    <label class="form-label" for="fullName">
+                        <i class="fas fa-user"></i>
+                        Full Name
+                    </label>
+                    <input type="text" class="form-control" id="fullName" placeholder="e.g., John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">
+                        <i class="fas fa-envelope"></i>
+                        Email Address
+                    </label>
+                    <input type="email" class="form-control" id="email" readonly required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="skills">
+                        <i class="fas fa-tools"></i>
+                        Skills
+                    </label>
+                    <input type="text" class="form-control" id="skills" placeholder="e.g., Python, JavaScript, UI/UX Design" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="experience">
+                        <i class="fas fa-chart-line"></i>
+                        Experience Level
+                    </label>
+                    <select class="form-control" id="experience" required>
+                        <option value="">Select experience level</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="education">
+                        <i class="fas fa-graduation-cap"></i>
+                        Education
+                    </label>
+                    <input type="text" class="form-control" id="education" placeholder="e.g., B.Sc. Computer Science, XYZ University" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="resumeLink">
+                        <i class="fas fa-file-alt"></i>
+                        Resume Link
+                    </label>
+                    <input type="url" class="form-control" id="resumeLink" placeholder="e.g., https://drive.google.com/your-resume" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="githubLink">
+                        <i class="fab fa-github"></i>
+                        GitHub Profile (Optional)
+                    </label>
+                    <input type="url" class="form-control" id="githubLink" placeholder="e.g., https://github.com/yourusername">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="linkedinLink">
+                        <i class="fab fa-linkedin"></i>
+                        LinkedIn Profile (Optional)
+                    </label>
+                    <input type="url" class="form-control" id="linkedinLink" placeholder="e.g., https://linkedin.com/in/yourusername">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="bio">
+                        <i class="fas fa-user-circle"></i>
+                        Bio
+                    </label>
+                    <textarea class="form-control" id="bio" rows="4" placeholder="e.g., I am a passionate computer science student with experience in web development..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="preferredProjects">
+                        <i class="fas fa-project-diagram"></i>
+                        Preferred Project Types
+                    </label>
+                    <input type="text" class="form-control" id="preferredProjects" placeholder="e.g., Web Development, Data Analysis" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                    <i class="fas fa-paper-plane"></i>
+                    Submit Profile
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+        import { getDatabase, ref, set, get } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD0wtET8bTtw_133RE4rWZiRFGESfbDtC0",
+            authDomain: "student-startup-connect.firebaseapp.com",
+            databaseURL: "https://student-startup-connect-default-rtdb.firebaseio.com",
+            projectId: "student-startup-connect",
+            storageBucket: "student-startup-connect.firebasestorage.app",
+            messagingSenderId: "570854385529",
+            appId: "1:570854385529:web:e45e5076a0cbcb9a56f1a8",
+            measurementId: "G-T5PMGL8K26"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('email').value = user.email;
+
+                const userRef = ref(database, `students/${user.uid}`);
+                get(userRef).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        document.getElementById('fullName').value = data.fullName || '';
+                        document.getElementById('skills').value = data.skills || '';
+                        document.getElementById('experience').value = data.experience || '';
+                        document.getElementById('education').value = data.education || '';
+                        document.getElementById('resumeLink').value = data.resumeLink || '';
+                        document.getElementById('githubLink').value = data.githubLink || '';
+                        document.getElementById('linkedinLink').value = data.linkedinLink || '';
+                        document.getElementById('bio').value = data.bio || '';
+                        document.getElementById('preferredProjects').value = data.preferredProjects || '';
+                    }
+                });
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+
+        document.getElementById('studentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const user = auth.currentUser;
+            if (!user) {
+                alert('Please log in to submit your profile');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                skills: document.getElementById('skills').value,
+                experience: document.getElementById('experience').value,
+                education: document.getElementById('education').value,
+                resumeLink: document.getElementById('resumeLink').value,
+                githubLink: document.getElementById('githubLink').value,
+                linkedinLink: document.getElementById('linkedinLink').value,
+                bio: document.getElementById('bio').value,
+                preferredProjects: document.getElementById('preferredProjects').value,
+                timestamp: Date.now()
+            };
+
+            try {
+                await set(ref(database, `students/${user.uid}`), formData);
+                alert('Profile submitted successfully!');
+                window.location.href = 'profile.html';
+            } catch (error) {
+                console.error('Error submitting profile:', error);
+                alert('Error submitting profile: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>

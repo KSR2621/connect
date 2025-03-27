@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Student-Startup Connect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary-color: #0ea5e9;
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --success-color: #22c55e;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --border-color: #e2e8f0;
+            --hover-bg: #f1f5f9;
+            --completed-color: #8b5cf6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--primary-color);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-grow: 1;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--surface-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .auth-buttons button {
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            background-color: var(--surface-color);
+            color: var(--primary-color);
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .auth-buttons button:hover {
+            background-color: var(--hover-bg);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--surface-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: var(--primary-color);
+            padding: 1rem;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 999;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-nav.active {
+            display: flex;
+        }
+
+        .mobile-nav a {
+            color: var(--surface-color);
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .mobile-nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background-color: var(--surface-color);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        h2, h3, h4 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2::after, h3::after, h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--surface-color);
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .project-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .project-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--background-color);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .project-info {
+            flex: 1;
+        }
+
+        .project-name {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .project-company {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .project-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .skill-tag {
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--primary-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .project-actions button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .view-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .view-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .withdraw-btn {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .withdraw-btn:hover {
+            background-color: #dc2626;
+        }
+
+        .delete-btn {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #dc2626;
+        }
+
+        .complete-btn {
+            background-color: var(--completed-color);
+            color: white;
+        }
+
+        .complete-btn:hover {
+            background-color: #7c3aed;
+        }
+
+        .no-projects {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .edit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+            transition: all 0.2s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .edit-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .back-btn {
+            background-color: var(--text-secondary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+            transition: all 0.2s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .back-btn:hover {
+            background-color: #475569;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .profile-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .project-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .project-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <button class="mobile-menu-btn" aria-label="Toggle mobile menu" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html">Projects</a>
+            <a href="available-students.html">Students</a>
+            <a href="community.html">Community</a>
+        </div>
+        <div class="auth-buttons">
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="index.html">Projects</a>
+        <a href="available-students.html">Students</a>
+        <a href="community.html">Community</a>
+    </div>
+
+    <div class="profile-container">
+        <h2>Profile</h2>
+
+        <div class="section" id="personalInfo">
+            <h3 id="infoTitle"></h3>
+            <div id="infoDetails"></div>
+            <button class="edit-btn" id="editProfileBtn">Edit Profile</button>
+        </div>
+
+        <!-- Student Sections -->
+        <div class="section" id="pastProjects" style="display: none;">
+            <h3>Past Projects</h3>
+            <ul id="pastProjectsList" class="project-list"></ul>
+        </div>
+
+        <div class="section" id="currentProjects" style="display: none;">
+            <h3>Current Projects</h3>
+            <ul id="currentProjectsList" class="project-list"></ul>
+        </div>
+
+        <div class="section" id="appliedProjects" style="display: none;">
+            <h3>Applied Projects</h3>
+            <ul id="appliedProjectsList" class="project-list"></ul>
+        </div>
+
+        <!-- Startup Sections -->
+        <div class="section" id="uploadedProjects" style="display: none;">
+            <h3>My Projects</h3>
+            <div class="subsection" id="openProjects">
+                <h4>Open Projects</h4>
+                <ul id="openProjectsList" class="project-list"></ul>
+            </div>
+            <div class="subsection" id="inProgressProjects">
+                <h4>In Progress Projects</h4>
+                <ul id="inProgressProjectsList" class="project-list"></ul>
+            </div>
+            <div class="subsection" id="completedProjects">
+                <h4>Completed Projects</h4>
+                <ul id="completedProjectsList" class="project-list"></ul>
+            </div>
+        </div>
+
+        <button class="back-btn" id="backBtn">Back</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+        import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+        import { getDatabase, ref, get, update, remove } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD0wtET8bTtw_133RE4rWZiRFGESfbDtC0",
+            authDomain: "student-startup-connect.firebaseapp.com",
+            databaseURL: "https://student-startup-connect-default-rtdb.firebaseio.com",
+            projectId: "student-startup-connect",
+            storageBucket: "student-startup-connect.appspot.com",
+            messagingSenderId: "570854385529",
+            appId: "1:570854385529:web:e45e5076a0cbcb9a56f1a8",
+            measurementId: "G-T5PMGL8K26"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNav = document.getElementById('mobileNav');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!mobileNav.contains(e.target) && e.target !== mobileMenuBtn) {
+                    mobileNav.classList.remove('active');
+                }
+            });
+        });
+
+        // Load student projects
+        async function loadStudentProjects(userId) {
+            try {
+                const projectsRef = ref(database, 'projects');
+                const projectsSnapshot = await get(projectsRef);
+                
+                if (!projectsSnapshot.exists()) {
+                    showNoProjects();
+                    return;
+                }
+
+                const allProjects = projectsSnapshot.val();
+                const applicationsRef = ref(database, 'applications');
+                const applicationsSnapshot = await get(applicationsRef);
+                
+                let appliedProjectIds = [];
+                if (applicationsSnapshot.exists()) {
+                    appliedProjectIds = Object.values(applicationsSnapshot.val())
+                        .filter(app => app.studentId === userId)
+                        .map(app => app.projectId);
+                }
+
+                const pastProjects = [];
+                const currentProjects = [];
+                const appliedProjects = [];
+                
+                Object.entries(allProjects).forEach(([id, project]) => {
+                    if (appliedProjectIds.includes(id)) {
+                        appliedProjects.push({ id, ...project });
+                    }
+                    if (project.assignedTo === userId && project.status === 'In Progress') {
+                        currentProjects.push({ id, ...project });
+                    }
+                    if (project.assignedTo === userId && project.status === 'Completed') {
+                        pastProjects.push({ id, ...project });
+                    }
+                });
+
+                renderProjects('pastProjectsList', pastProjects, false);
+                renderProjects('currentProjectsList', currentProjects, false);
+                renderProjects('appliedProjectsList', appliedProjects, true);
+
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                showError();
+            }
+        }
+
+        // Load startup projects
+        async function loadStartupProjects(userId) {
+            try {
+                const projectsRef = ref(database, 'projects');
+                const snapshot = await get(projectsRef);
+                
+                if (!snapshot.exists()) {
+                    showNoProjects();
+                    return;
+                }
+
+                const allProjects = snapshot.val();
+                const startupProjects = Object.entries(allProjects)
+                    .filter(([id, project]) => project.postedBy === userId || project.startupId === userId)
+                    .map(([id, project]) => ({ id, ...project }));
+
+                const openProjects = startupProjects.filter(p => p.status === 'Open');
+                const inProgressProjects = startupProjects.filter(p => p.status === 'In Progress');
+                const completedProjects = startupProjects.filter(p => p.status === 'Completed');
+
+                renderProjects('openProjectsList', openProjects, true, true);
+                renderProjects('inProgressProjectsList', inProgressProjects, true);
+                renderProjects('completedProjectsList', completedProjects, false);
+
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                showError();
+            }
+        }
+
+        // Render projects to the specified list
+        function renderProjects(listId, projects, showWithdraw = false, showDelete = false) {
+            const listElement = document.getElementById(listId);
+            
+            if (projects.length === 0) {
+                listElement.innerHTML = '<li class="no-projects">No projects found</li>';
+                return;
+            }
+
+            listElement.innerHTML = projects.map(project => `
+                <li class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">${project.projectTitle}</div>
+                        <div class="project-company">${project.startup || 'No company'}</div>
+                        <div class="project-skills">
+                            ${project.skills ? project.skills.split(',').slice(0, 3).map(skill => 
+                                `<span class="skill-tag">${skill.trim()}</span>`
+                            ).join('') : ''}
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <button class="view-btn" data-project-id="${project.id}">View</button>
+                        ${showWithdraw ? `<button class="withdraw-btn" data-project-id="${project.id}">Withdraw</button>` : ''}
+                        ${showDelete ? `<button class="delete-btn" data-project-id="${project.id}">Delete</button>` : ''}
+                        ${!showWithdraw && !showDelete && project.status === 'In Progress' ? 
+                          `<button class="complete-btn" data-project-id="${project.id}">Complete</button>` : ''}
+                    </div>
+                </li>
+            `).join('');
+
+            // Add event listeners
+            document.querySelectorAll(`#${listId} .view-btn`).forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const projectId = e.target.dataset.projectId;
+                    window.location.href = `project-details.html?id=${projectId}`;
+                });
+            });
+
+            document.querySelectorAll(`#${listId} .withdraw-btn`).forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    if (confirm('Withdraw application?')) {
+                        await withdrawApplication(userId, e.target.dataset.projectId);
+                    }
+                });
+            });
+
+            document.querySelectorAll(`#${listId} .delete-btn`).forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    if (confirm('Delete this project?')) {
+                        await remove(ref(database, `projects/${e.target.dataset.projectId}`));
+                        loadStartupProjects(userId);
+                    }
+                });
+            });
+
+            document.querySelectorAll(`#${listId} .complete-btn`).forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    if (confirm('Mark as completed?')) {
+                        await update(ref(database, `projects/${e.target.dataset.projectId}`), {
+                            status: 'Completed'
+                        });
+                        loadStartupProjects(userId);
+                    }
+                });
+            });
+        }
+
+        async function withdrawApplication(studentId, projectId) {
+            try {
+                const applicationsRef = ref(database, 'applications');
+                const snapshot = await get(applicationsRef);
+                
+                if (snapshot.exists()) {
+                    const applications = snapshot.val();
+                    const applicationId = Object.keys(applications).find(
+                        key => applications[key].projectId === projectId && 
+                              applications[key].studentId === studentId
+                    );
+                    
+                    if (applicationId) {
+                        await remove(ref(database, `applications/${applicationId}`));
+                        loadStudentProjects(studentId);
+                    }
+                }
+            } catch (error) {
+                console.error('Error withdrawing application:', error);
+                alert('Error withdrawing application');
+            }
+        }
+
+        function showNoProjects() {
+            document.getElementById('pastProjectsList').innerHTML = '<li class="no-projects">No projects found</li>';
+            document.getElementById('currentProjectsList').innerHTML = '<li class="no-projects">No projects found</li>';
+            document.getElementById('appliedProjectsList').innerHTML = '<li class="no-projects">No projects found</li>';
+        }
+
+        function showError() {
+            const errorHTML = '<li style="color: var(--danger-color);">Error loading projects</li>';
+            document.getElementById('pastProjectsList').innerHTML = errorHTML;
+            document.getElementById('currentProjectsList').innerHTML = errorHTML;
+            document.getElementById('appliedProjectsList').innerHTML = errorHTML;
+        }
+
+        // Main profile loading
+        let userId;
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            userId = user.uid;
+            const userType = localStorage.getItem('userType');
+
+            if (!userType) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const userRef = ref(database, `users/${userId}`);
+            get(userRef).then((snapshot) => {
+                if (!snapshot.exists()) {
+                    document.getElementById('infoDetails').innerHTML = '<div>User data not found</div>';
+                    return;
+                }
+
+                const userData = snapshot.val();
+                const infoTitle = document.getElementById('infoTitle');
+                const infoDetails = document.getElementById('infoDetails');
+
+                if (userType === 'student') {
+                    infoTitle.textContent = "Personal Information";
+                    infoDetails.innerHTML = `
+                        <div><strong>Name:</strong> ${userData.firstName || ''} ${userData.lastName || ''}</div>
+                        <div><strong>Skills:</strong> ${userData.skills ? userData.skills.join(', ') : 'None'}</div>
+                    `;
+
+                    document.getElementById('pastProjects').style.display = 'block';
+                    document.getElementById('currentProjects').style.display = 'block';
+                    document.getElementById('appliedProjects').style.display = 'block';
+                    loadStudentProjects(userId);
+
+                } else if (userType === 'startup') {
+                    infoTitle.textContent = "Company Details";
+                    infoDetails.innerHTML = `
+                        <div><strong>Company:</strong> ${userData.companyName || 'Not provided'}</div>
+                        <div><strong>Industry:</strong> ${userData.industry || 'Not provided'}</div>
+                    `;
+
+                    document.getElementById('uploadedProjects').style.display = 'block';
+                    loadStartupProjects(userId);
+                }
+            });
+        });
+
+        document.getElementById('editProfileBtn').addEventListener('click', () => {
+            const userType = localStorage.getItem('userType');
+            window.location.href = userType === 'student' ? 'student-form.html' : 'startup-form.html';
+        });
+
+        document.getElementById('backBtn').addEventListener('click', () => {
+            window.history.back();
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                localStorage.clear();
+                window.location.href = 'login.html';
+            } catch (error) {
+                alert('Error logging out: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>

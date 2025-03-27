@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #4f46e5;
+            --accent-color: #818cf8;
+            --background-color: #f8fafc;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+            --header-bg: #4f46e5;
+            --mobile-breakpoint: 768px;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--header-bg), var(--primary-color));
+            padding: 80px 20px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-repeat: no-repeat;
+            background-position: bottom;
+            background-size: cover;
+            opacity: 0.1;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+            animation: fadeInDown 1s ease-out;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        nav {
+            background: var(--card-bg);
+            padding: 20px 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Updated Hamburger Menu Styles - Left Aligned */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+            position: relative;
+            width: 30px;
+            height: 24px;
+            margin-right: auto;
+        }
+
+        .hamburger i {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+            transform-origin: left center;
+        }
+
+        .hamburger i:nth-child(1) {
+            top: 0;
+        }
+
+        .hamburger i:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .hamburger i:nth-child(3) {
+            bottom: 0;
+        }
+
+        .hamburger:hover i {
+            background-color: var(--secondary-color);
+        }
+
+        .form-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 40px auto;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .form-container h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 3px;
+        }
+
+        .confirmation-message {
+            text-align: center;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            margin: 20px 0;
+            background-color: rgba(255,255,255,0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .confirmation-message.confirmed {
+            color: var(--success-color);
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .confirmation-message.unconfirmed {
+            color: var(--error-color);
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--error-color);
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background-color: #fff;
+            color: var(--text-color);
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+        }
+
+        input:disabled, textarea:disabled, button:disabled {
+            background-color: #f1f5f9;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 10px;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .error {
+            color: var(--error-color);
+            text-align: center;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            background-color: rgba(239, 68, 68, 0.1);
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid var(--error-color);
+        }
+
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            background: var(--text-color);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        footer p {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            header {
+                padding: 60px 20px;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+                line-height: 1.2;
+            }
+            
+            nav {
+                padding: 15px 20px;
+                justify-content: flex-start;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--card-bg);
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 80px 30px 30px;
+                gap: 20px;
+                transition: right 0.3s ease;
+                z-index: 1000;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.2rem;
+                padding: 10px 0;
+            }
+            
+            .form-container {
+                max-width: 90%;
+                margin: 30px auto;
+                padding: 20px;
+            }
+            
+            .form-container h2 {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+            
+            .confirmation-message {
+                font-size: 0.9rem;
+                padding: 12px;
+                margin: 15px 0;
+            }
+            
+            label {
+                font-size: 0.9rem;
+                margin: 12px 0 6px;
+            }
+            
+            input, textarea {
+                padding: 10px 12px;
+                margin-bottom: 12px;
+                font-size: 0.9rem;
+            }
+            
+            button {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .error {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+            
+            footer {
+                padding: 25px 15px;
+                font-size: 0.9rem;
+            }
+
+            .scroll-to-top {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-container {
+                padding: 15px;
+            }
+            
+            .form-container h2 {
+                font-size: 1.3rem;
+                margin-bottom: 12px;
+            }
+            
+            .confirmation-message {
+                font-size: 0.85rem;
+                padding: 10px;
+                margin: 12px 0;
+            }
+            
+            label {
+                font-size: 0.85rem;
+                margin: 10px 0 5px;
+            }
+            
+            input, textarea {
+                padding: 8px 10px;
+                margin-bottom: 10px;
+                font-size: 0.85rem;
+            }
+            
+            button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .error {
+                font-size: 0.85rem;
+                padding: 8px;
+            }
+            
+            footer {
+                padding: 20px 10px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Apply for Project</h1>
+    </header>
+
+    <nav>
+        <button class="hamburger">
+            <i></i>
+            <i></i>
+            <i></i>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="available-projects.html">Available Projects</a>
+            <a href="student-profile.html">Student Profile</a>
+            <a href="community.html">Community Forum</a>
+        </div>
+        <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+    </nav>
+
+    <div class="form-container" id="formContainer">
+        <h2>Application Form</h2>
+        <!-- Confirmation Status Message -->
+        <div id="confirmationMessage" class="confirmation-message"></div>
+        <form id="applicationForm">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="e.g., John Doe" required disabled>
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="e.g., john.doe@example.com" required disabled>
+
+            <label for="resumeLink">Resume Link (Google Drive, Dropbox, etc.)</label>
+            <input type="url" id="resumeLink" name="resumeLink" placeholder="e.g., https://drive.google.com/your-resume" required>
+
+            <label for="githubLink">GitHub Profile (Optional)</label>
+            <input type="url" id="githubLink" name="githubLink" placeholder="e.g., https://github.com/yourusername">
+
+            <label for="linkedinLink">LinkedIn Profile (Optional)</label>
+            <input type="url" id="linkedinLink" name="linkedinLink" placeholder="e.g., https://linkedin.com/in/yourusername">
+
+            <label for="coverLetter">Cover Letter</label>
+            <textarea id="coverLetter" name="coverLetter" rows="5" placeholder="Explain why you are a good fit for this project..." required></textarea>
+
+            <label for="additionalInfo">Additional Information (Optional)</label>
+            <textarea id="additionalInfo" name="additionalInfo" rows="3" placeholder="Any other relevant information..."></textarea>
+
+            <button type="submit" id="submitButton">Submit Application</button>
+        </form>
+    </div>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <footer>
+        <p>© 2024 Student-Startup Connect. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Firebase SDK (Modular) -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+        import { getDatabase, ref, push, set, get } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD0wtET8bTtw_133RE4rWZiRFGESfbDtC0",
+            authDomain: "student-startup-connect.firebaseapp.com",
+            databaseURL: "https://student-startup-connect-default-rtdb.firebaseio.com",
+            projectId: "student-startup-connect",
+            storageBucket: "student-startup-connect.firebasestorage.app",
+            messagingSenderId: "570854385529",
+            appId: "1:570854385529:web:e45e5076a0cbcb9a56f1a8",
+            measurementId: "G-T5PMGL8K26"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('#navLinks');
+            const mobileOverlay = document.querySelector('#mobileOverlay');
+            const navLinksItems = document.querySelectorAll('.nav-links a');
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+
+            const toggleMenu = () => {
+                navLinks.classList.toggle('active');
+                mobileOverlay.classList.toggle('active');
+                document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+            };
+
+            hamburger.addEventListener('click', toggleMenu);
+            mobileOverlay.addEventListener('click', toggleMenu);
+
+            // Close menu when any nav link is clicked
+            navLinksItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) { // Only for mobile
+                        navLinks.classList.remove('active');
+                        mobileOverlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+
+            // Scroll to top button functionality
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+        });
+
+        // Get DOM elements
+        const formContainer = document.getElementById('formContainer');
+        const applicationForm = document.getElementById('applicationForm');
+        const fullNameInput = document.getElementById('fullName');
+        const emailInput = document.getElementById('email');
+        const submitButton = document.getElementById('submitButton');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+
+        // Get the project ID from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('projectId');
+
+        if (!projectId) {
+            formContainer.innerHTML = '<p class="error">Error: No project ID provided.</p>';
+        } else {
+            // Check authentication state and fetch user data
+            onAuthStateChanged(auth, async (user) => {
+                if (!user) {
+                    formContainer.innerHTML = '<p class="error">Please log in to apply for this project.</p>';
+                    return;
+                }
+
+                const userId = localStorage.getItem('userId');
+                const userType = localStorage.getItem('userType');
+
+                if (!userId || !userType) {
+                    formContainer.innerHTML = '<p class="error">User session not found. Please log in again.</p>';
+                    return;
+                }
+
+                if (userType !== 'student') {
+                    formContainer.innerHTML = '<p class="error">Only students can apply for projects.</p>';
+                    return;
+                }
+
+                let isConfirmed = false;
+
+                // Fetch user data to pre-fill name and email and check confirmation status
+                try {
+                    const userRef = ref(database, `users/${userId}`);
+                    const userSnapshot = await get(userRef);
+                    if (userSnapshot.exists()) {
+                        const userData = userSnapshot.val();
+                        console.log("Fetched user data:", userData); // Debug log
+                        fullNameInput.value = `${userData.firstName || ''} ${userData.lastName || ''}`.trim() || 'Not provided';
+                        emailInput.value = userData.email || 'Not provided';
+                        isConfirmed = userData.confirmed === true || userData.confirmed === "true";
+                        console.log("isConfirmed value:", isConfirmed); // Debug log
+
+                        // Update confirmation message and form accessibility
+                        if (isConfirmed) {
+                            confirmationMessage.classList.add('confirmed');
+                            confirmationMessage.textContent = "You are confirmed and can apply for this project.";
+                            // Form inputs are already enabled by default
+                        } else {
+                            confirmationMessage.classList.add('unconfirmed');
+                            confirmationMessage.textContent = "You are an unconfirmed user, you cannot apply for projects.";
+                            // Disable all form inputs except the pre-filled ones
+                            document.querySelectorAll('#applicationForm input:not(#fullName):not(#email), #applicationForm textarea, #submitButton').forEach(element => {
+                                element.disabled = true;
+                            });
+                        }
+                    } else {
+                        formContainer.innerHTML = '<p class="error">User data not found. Please sign up again.</p>';
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                    formContainer.innerHTML = '<p class="error">Error loading user data: ' + error.message + '</p>';
+                    return;
+                }
+
+                // Handle form submission
+                applicationForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    if (!isConfirmed) {
+                        alert("You are an unconfirmed user, you cannot apply for projects.");
+                        return;
+                    }
+
+                    // Get form values
+                    const fullName = fullNameInput.value;
+                    const email = emailInput.value;
+                    const resumeLink = document.getElementById('resumeLink').value;
+                    const githubLink = document.getElementById('githubLink').value;
+                    const linkedinLink = document.getElementById('linkedinLink').value;
+                    const coverLetter = document.getElementById('coverLetter').value;
+                    const additionalInfo = document.getElementById('additionalInfo').value;
+
+                    try {
+                        // Save application to Firebase under applications/<applicationId>
+                        const applicationsRef = ref(database, 'applications');
+                        const newApplication = push(applicationsRef);
+                        await set(newApplication, {
+                            studentId: userId,
+                            projectId: projectId,
+                            fullName,
+                            email,
+                            resumeLink,
+                            githubLink,
+                            linkedinLink,
+                            coverLetter,
+                            additionalInfo,
+                            status: 'Pending',
+                            timestamp: Date.now()
+                        });
+
+                        alert('Application submitted successfully!');
+                        applicationForm.reset();
+                        fullNameInput.value = fullName; // Restore pre-filled values
+                        emailInput.value = email;
+                        window.location.href = `project-details.html?id=${projectId}`; // Redirect back to project details
+                    } catch (error) {
+                        console.error('Error submitting application:', error);
+                        alert('Error submitting application: ' + error.message);
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

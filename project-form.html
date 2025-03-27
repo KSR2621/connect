@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Submission Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card" style="max-width: 800px; margin: 2rem auto;">
+            <div class="header">
+                <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Submit a New Project</h1>
+                <p style="font-size: 1.1rem; opacity: 0.9;">Create an exciting opportunity for students</p>
+            </div>
+
+            <form id="projectForm" style="margin-top: 2rem;">
+                <div class="form-group">
+                    <label class="form-label" for="projectTitle">
+                        <i class="fas fa-heading"></i>
+                        Project Title
+                    </label>
+                    <input type="text" class="form-control" id="projectTitle" placeholder="e.g., Data Analysis Project" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="description">
+                        <i class="fas fa-info-circle"></i>
+                        About the Project
+                    </label>
+                    <textarea class="form-control" id="description" rows="4" placeholder="Describe the project (e.g., Analyze datasets to uncover trends...)" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="category">
+                        <i class="fas fa-folder"></i>
+                        Project Category
+                    </label>
+                    <select class="form-control" id="category" required>
+                        <option value="">Select a category</option>
+                        <option value="Data Analysis">Data Analysis</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Social Media Marketing">Social Media Marketing</option>
+                        <option value="Graphic Design">Graphic Design</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="level">
+                        <i class="fas fa-chart-line"></i>
+                        Project Level
+                    </label>
+                    <select class="form-control" id="level" required>
+                        <option value="">Select a level</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="skills">
+                        <i class="fas fa-tools"></i>
+                        Skills Required
+                    </label>
+                    <input type="text" class="form-control" id="skills" placeholder="e.g., Python, Excel, SQL, Data Visualization" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="duration">
+                        <i class="fas fa-clock"></i>
+                        Duration
+                    </label>
+                    <input type="text" class="form-control" id="duration" placeholder="e.g., 4 months" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="startup">
+                        <i class="fas fa-building"></i>
+                        Startup Name
+                    </label>
+                    <input type="text" class="form-control" id="startup" readonly required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Location
+                    </label>
+                    <input type="text" class="form-control" id="location" placeholder="e.g., Remote" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="compensation">
+                        <i class="fas fa-money-bill-wave"></i>
+                        Compensation
+                    </label>
+                    <input type="text" class="form-control" id="compensation" placeholder="e.g., Certificate & Stipend" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="mentor">
+                        <i class="fas fa-user-tie"></i>
+                        Mentor (Optional)
+                    </label>
+                    <input type="text" class="form-control" id="mentor" placeholder="e.g., Experienced Web Developer">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="responsibilities">
+                        <i class="fas fa-tasks"></i>
+                        Responsibilities (Optional)
+                    </label>
+                    <textarea class="form-control" id="responsibilities" rows="3" placeholder="e.g., Develop responsive UI components, integrate backend APIs..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="deliverables">
+                        <i class="fas fa-check-circle"></i>
+                        Expected Deliverables
+                    </label>
+                    <textarea class="form-control" id="deliverables" rows="3" placeholder="e.g., A fully functional e-commerce website with payment integration" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="openings">
+                        <i class="fas fa-users"></i>
+                        Number of Openings
+                    </label>
+                    <input type="number" class="form-control" id="openings" min="1" placeholder="e.g., 2" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="startDate">
+                        <i class="fas fa-calendar-alt"></i>
+                        Preferred Start Date
+                    </label>
+                    <input type="date" class="form-control" id="startDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="deadline">
+                        <i class="fas fa-hourglass-end"></i>
+                        Application Deadline
+                    </label>
+                    <input type="date" class="form-control" id="deadline" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="timeCommitment">
+                        <i class="fas fa-clock"></i>
+                        Time Commitment (Hours per Week)
+                    </label>
+                    <input type="number" class="form-control" id="timeCommitment" min="1" placeholder="e.g., 10" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="eligibility">
+                        <i class="fas fa-user-check"></i>
+                        Eligibility Criteria (Optional)
+                    </label>
+                    <textarea class="form-control" id="eligibility" rows="3" placeholder="e.g., Must be a Computer Science student with at least 1 year of coding experience"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="applicationRequirements">
+                        <i class="fas fa-file-alt"></i>
+                        Application Requirements
+                    </label>
+                    <textarea class="form-control" id="applicationRequirements" rows="3" placeholder="e.g., Submit a resume and a link to your GitHub portfolio" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contact">
+                        <i class="fas fa-envelope"></i>
+                        Contact Information
+                    </label>
+                    <input type="email" class="form-control" id="contact" placeholder="e.g., contact@startup.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="status">
+                        <i class="fas fa-info-circle"></i>
+                        Project Status
+                    </label>
+                    <select class="form-control" id="status" required>
+                        <option value="Open">Open</option>
+                        <option value="Closed">Closed</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                    <i class="fas fa-paper-plane"></i>
+                    Submit Project
+                </button>
+            </form>
+
+            <button onclick="history.back()" class="btn btn-secondary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                <i class="fas fa-arrow-left"></i>
+                Back
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+        import { getDatabase, ref, push, set, get } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD0wtET8bTtw_133RE4rWZiRFGESfbDtC0",
+            authDomain: "student-startup-connect.firebaseapp.com",
+            databaseURL: "https://student-startup-connect-default-rtdb.firebaseio.com",
+            projectId: "student-startup-connect",
+            storageBucket: "student-startup-connect.firebasestorage.app",
+            messagingSenderId: "570854385529",
+            appId: "1:570854385529:web:e45e5076a0cbcb9a56f1a8",
+            measurementId: "G-T5PMGL8K26"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        // Check if user is logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Get startup name from database
+                const userRef = ref(database, `users/${user.uid}`);
+                get(userRef).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        document.getElementById('startup').value = data.companyName || '';
+                    }
+                });
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('projectForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const user = auth.currentUser;
+            if (!user) {
+                alert('Please log in to submit a project');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const formData = {
+                projectTitle: document.getElementById('projectTitle').value,
+                description: document.getElementById('description').value,
+                category: document.getElementById('category').value,
+                level: document.getElementById('level').value,
+                skills: document.getElementById('skills').value,
+                duration: document.getElementById('duration').value,
+                startup: document.getElementById('startup').value,
+                location: document.getElementById('location').value,
+                compensation: document.getElementById('compensation').value,
+                mentor: document.getElementById('mentor').value,
+                responsibilities: document.getElementById('responsibilities').value,
+                deliverables: document.getElementById('deliverables').value,
+                openings: document.getElementById('openings').value,
+                startDate: document.getElementById('startDate').value,
+                deadline: document.getElementById('deadline').value,
+                timeCommitment: document.getElementById('timeCommitment').value,
+                eligibility: document.getElementById('eligibility').value,
+                applicationRequirements: document.getElementById('applicationRequirements').value,
+                contact: document.getElementById('contact').value,
+                status: document.getElementById('status').value,
+                timestamp: Date.now()
+            };
+
+            try {
+                const newProjectRef = push(ref(database, 'projects'));
+                await set(newProjectRef, {
+                    ...formData,
+                    startupId: user.uid
+                });
+                alert('Project submitted successfully!');
+                window.location.href = 'profile.html';
+            } catch (error) {
+                console.error('Error submitting project:', error);
+                alert('Error submitting project: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
